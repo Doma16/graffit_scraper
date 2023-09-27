@@ -4,7 +4,6 @@ import requests
 import pandas as pd
 from PIL import Image
 from tqdm import tqdm
-from io import BytesIO
 from bs4 import BeautifulSoup as bs
 
 import scrape.settings as settings
@@ -79,7 +78,7 @@ def download(csvf):
     
     df = pd.read_csv(csvf)
 
-    for index, row in df.iterrows():
+    for index, row in tqdm(df.iterrows()):
         
         r = requests.get(row['url'], stream=True)
         if r.status_code == 200:
