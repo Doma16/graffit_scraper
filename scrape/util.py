@@ -74,19 +74,30 @@ def iter_pages(*functions):
     print('should be done, check csv file!')
 
 
-def download(csvf):
+def download(csvf, ignore=True):
     
     df = pd.read_csv(csvf)
 
+    if ignore:
+        with open(settings.IGNORE_FILE, 'r') as f:
+            ignore_set = set( x.strip().replace('\\', '') for x in f.readlines())
+            
+
     for index, row in tqdm(df.iterrows()):
+
+        if row['title'].strip() in ignore_set:
+            continue
         
         r = requests.get(row['url'], stream=True)
         if r.status_code == 200:
             r.raw.decode_content = True
 
             im = Image.open(r.raw)
+
+            caption = "".join(row['caption'].strip().split())
+            title = "".join(row['title'].strip().split())
             
-            save_path = os.path.join(settings.SAVE_DB, f'{index}_{row["caption"]}_{row["title"]}.png')
+            save_path = os.path.join(settings.SAVE_DB, f'{index}_{caption}_{title}.png')
             im.save(save_path, format='png')
         
     del df
