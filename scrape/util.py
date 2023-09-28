@@ -6,7 +6,7 @@ from PIL import Image
 from tqdm import tqdm
 from bs4 import BeautifulSoup as bs
 
-import scrape.settings as settings
+import settings
 
 def get_page(url):
 
@@ -80,12 +80,12 @@ def download(csvf, ignore=True):
 
     if ignore:
         with open(settings.IGNORE_FILE, 'r') as f:
-            ignore_set = set( x.strip().replace('\\', '') for x in f.readlines())
+            ignore_set = set( x.strip().lower() for x in f.readlines())
             
 
     for index, row in tqdm(df.iterrows()):
 
-        if row['title'].strip() in ignore_set:
+        if row['title'].strip().lower() in ignore_set:
             continue
         
         r = requests.get(row['url'], stream=True)
@@ -94,8 +94,8 @@ def download(csvf, ignore=True):
 
             im = Image.open(r.raw)
 
-            caption = "".join(row['caption'].strip().split())
-            title = "".join(row['title'].strip().split())
+            caption = "".join(row['caption'].strip().replace('/','').split())
+            title = "".join(row['title'].strip().replace('/','').split())
             
             save_path = os.path.join(settings.SAVE_DB, f'{index}_{caption}_{title}.png')
             im.save(save_path, format='png')

@@ -8,3 +8,7 @@ SAVE_NAME = 'graffiti.csv'
 
 SAVE_DB = '/home/doma/mnt/disk2/home/graffiti_db/db'
 IGNORE_FILE = '/home/doma/graffiti/ignore.txt'
+
+MODEL_TYPE = 'vit_b'
+SAM_PATH = '/home/doma/mnt/disk2/home/graffiti_db/sam_b.pth'
+SAVE_MASKS = '/home/doma/mnt/disk2/home/graffiti_db/masks_db'

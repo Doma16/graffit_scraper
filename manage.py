@@ -1,4 +1,4 @@
-import scrape.settings as settings
+import settings
 from scrape.util import get_page, get_data, save_data, iter_pages, download
 
 
