@@ -1,4 +1,5 @@
 from segment_anything import sam_model_registry, SamPredictor, SamAutomaticMaskGenerator
+import numpy as np
 import settings
 
 class SAM:
@@ -14,10 +15,22 @@ class SAM:
 
         self.mask_generator = SamAutomaticMaskGenerator(self.sam)
 
-    def segment(self, img):
-        
-        masks = self.mask_generator.generate(img)
+    def set(self, image):
+        self.predictor = SamPredictor(self.sam)
+        self.predictor.set_image(image)
 
+    def segment(self, img, box=None):
+        
+        if type(box) == type(None):
+            masks = self.mask_generator.generate(img)
+        else:
+            x, y = (box[0] + box[2])/2, (box[1] + box[3])/2
+            masks, _, _ = self.predictor.predict(
+                point_coords=np.array([[x,y]]),
+                point_labels=np.array([0]),
+                box=box[None, :],
+                multimask_output=True)
+            
         return masks
 
 
