@@ -16,3 +16,6 @@ import sanitize.util as sutil
 
 # To make images 256 x 256 resolution, cluster them and possibly get rid of outliers
 # sutil.cut_from_middle()
+
+# To cluster data in folders, so we can maybe see someoutliers
+# sutil.cluster()

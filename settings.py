@@ -7,6 +7,7 @@ SAVE_URL = '/home/doma/mnt/disk2/home/graffiti_db'
 SAVE_NAME = 'graffiti.csv'
 
 SAVE_DB = '/home/doma/mnt/disk2/home/graffiti_db/db'
+SAVE_CLUSTER = '/home/doma/mnt/disk2/home/graffiti_db'
 IGNORE_FILE = '/home/doma/graffiti/ignore.txt'
 
 MODEL_TYPE = 'vit_b'
